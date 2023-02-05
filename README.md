@@ -54,3 +54,49 @@ d.package.json中添加如下配置
 ...
 ```
 b. `pnpx prisma db seed`
+
+## 三、看数据(Prisma Studio)[https://www.prisma.io/studio]
+`pnpx prisma studio`
+
+## 四、GraphQL API
+### 和restful对比，GraphQL的优势在于：
+1.Rest 开发的一个通用流程：1.要确定方法和路径 2.要确定返回的数据结构 3.要确定请求参数的数据结构
+增加了学习曲线、使用麻烦，影响开发效率。后端同学也要管理它，并且需要写接口文档。随着项目的迭代和复杂，接口文档也需要不断更新和复杂。
+2.restful api 没有type,导致返回的结果可能出现前端报错
+3.overfetching & underfetching
+
+### GraphQL's SDL
+定义Schema：
+```graphql
+type User {
+  id: ID
+  email: String
+  image: String
+  role: Role
+  # ! is non-nullable
+  bookmarks: [Link]!
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+```
+查询：
+```graphql
+type Query {
+  links: [Link]!
+  link(id: ID!): Link!
+  user(id: ID!): User!
+  users: [User]!
+}
+```
+增删改：
+···graphql
+type Mutation {
+  createLink(category: String!, description: String!, imageUrl: String!, title: String!, url: String!): Link!
+  deleteLink(id: ID!): Link!
+  updateLink(category: String, description: String, id: String, imageUrl: String, title: String, url: String): Link!
+}
+```
+### Build GraphQL
